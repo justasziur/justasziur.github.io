@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LTU Republic | Justas Žiurinskas</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui;background:#000;color:#fff}
+    .wrap{max-width:800px;margin:0 auto;padding:24px;text-align:center}
+    header{display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;font-size:20px}
+    nav a{color:#ccc;margin-left:16px;text-decoration:none}
+    nav a:hover{color:#fff}
+    section{padding:28px 0;border-top:1px solid rgba(255,255,255,0.1)}
+    .media{background:#111;border-radius:12px;overflow:hidden;aspect-ratio:9/16;max-width:300px;margin:0 auto}
+    video{width:100%;height:100%;display:block}
+    .btn{display:inline-block;margin-top:14px;padding:10px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;text-decoration:none}
+    .btn:hover{background:rgba(255,255,255,0.1)}
+
+    /* Password overlay */
+    #lockscreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:1000}
+    #lockscreen form{background:#111;padding:40px;border-radius:12px;text-align:center}
+    #lockscreen input{padding:10px;border-radius:6px;border:none;margin-top:10px;text-align:center}
+    #lockscreen button{margin-top:14px;padding:8px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:transparent;color:#fff;cursor:pointer}
+    #lockscreen p{color:#ccc;font-size:14px}
+  </style>
+</head>
+<body>
+  <div id="lockscreen">
+    <form id="pwform">
+      <h2>Įveskite slaptažodį</h2>
+      <input type="password" id="pwinput" placeholder="Slaptažodis" required />
+      <br>
+      <button type="submit">Pateikti</button>
+      <p id="pwmsg"></p>
+    </form>
+  </div>
+
+  <div class="wrap" id="content" style="display:none">
+    <header>
+      <div class="brand">Justas Žiurinskas</div>
+      <nav>
+        <a href="https://www.twitch.tv/moderator/lturepublic">LTU Republic</a>
+      </nav>
+    </header>
+
+    <section>
+      <h1>NAUJIENA</h1>
+      <div class="media"><video controls preload="metadata"><source src="videos/vertical1.mp4" type="video/mp4"></video></div>
+      <a class="btn" href="videos/vertical1.mp4" download>Download</a>
+    </section>
+
+    <section>
+      <h1>Senesni parsisiuntimai:</h1>
+      <div style="margin-top:12px;text-align:left;max-width:600px;margin-left:auto;margin-right:auto;">
+        <div style="margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          <div>
+            <strong>2x Tauragė</strong>
+            <div style="font-size:13px;color:#ccc;margin-top:6px">lturep_taurage_dviguba.mp4</div>
+          </div>
+          <div style="flex-shrink:0">
+            <a class="btn" href="videos/sample.mp4" download>Download</a>
+          </div>
+        </div>
+
+        <div style="margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          <div>
+            <strong>Šilutė pt. 2</strong>
+            <div style="font-size:13px;color:#ccc;margin-top:6px">lturep_silute_2</div>
+          </div>
+          <div style="flex-shrink:0">
+            <a class="btn" href="videos/sample2.mp4" download>Download</a>
+          </div>
+        </div>
+
+     
+      </div>
+    </section>
+	
+	<div style="font-size:13px;color:#aaa;margin-top:8px">© Justas Žiurinskas, est. 2020</div>
+  </div>
+
+  <script>
+    const form=document.getElementById('pwform');
+    const input=document.getElementById('pwinput');
+    const msg=document.getElementById('pwmsg');
+    const lock=document.getElementById('lockscreen');
+    const content=document.getElementById('content');
+
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(input.value==="elteju"){
+        lock.style.display="none";
+        content.style.display="block";
+      }else{
+        msg.textContent="Slaptažodis neteisingas.";
+        input.value="";
+      }
+    });
+  </script>
+</body>
+</html>
