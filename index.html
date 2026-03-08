@@ -1,94 +1,330 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pagrindinis | Justas Žiurinskas</title>
-  <link rel="icon" type="image/x-icon" href="jz.ico">
-  <style>
-    body{margin:0;font-family:Inter,system-ui;background:#000;color:#fff}
-    .wrap{max-width:800px;margin:0 auto;padding:24px;text-align:center}
-    header{display:flex;align-items:center;justify-content:space-between}
-    .brand{font-weight:700;font-size:20px}
-    nav a{color:#ccc;margin-left:16px;text-decoration:none}
-    nav a:hover{color:#fff}
-    section{padding:28px 0;border-top:1px solid rgba(255,255,255,0.1)}
-    .media{background:#111;border-radius:12px;overflow:hidden;aspect-ratio:9/16;max-width:300px;margin:0 auto}
-    video{width:100%;height:100%;display:block}
-    .btn{display:inline-block;margin-top:14px;padding:10px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;text-decoration:none}
-    .btn:hover{background:rgba(255,255,255,0.1)}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio | Justas Žiurinskas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" href="logo.png" type="image/x-icon">
 
-    /* Flashy intro */
-    .intro{padding:60px 20px;text-align:center;background:linear-gradient(135deg,#111 0%,#222 100%);border-radius:12px;margin-bottom:30px;animation:fadeIn 2s ease-in-out}
-    .intro h1{font-size:36px;margin:0 0 12px;letter-spacing:1px}
-    .intro p{font-size:18px;color:#ccc;margin:0}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    /* Extra downloads */
-    .extra-item{margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left}
-    .extra-item strong{display:block}
-    .extra-item div{flex:1}
+body{
+font-family:'Montserrat',sans-serif;
+background:#0b0b0b;
+color:white;
+line-height:1.6;
+}
 
-    /* Contacts */
-    footer{margin-top:40px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.1);color:#ccc;font-size:14px}
-    .contact-row{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:12px}
-    .contact-card{background:rgba(255,255,255,0.03);padding:14px 18px;border-radius:8px}
+section{
+padding:80px 10%;
+}
 
-    /* Password overlay */
-    #lockscreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:1000}
-    #lockscreen form{background:#111;padding:40px;border-radius:12px;text-align:center}
-    #lockscreen input{padding:10px;border-radius:6px;border:none;margin-top:10px;text-align:center}
-    #lockscreen button{margin-top:14px;padding:8px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:transparent;color:#fff;cursor:pointer}
-    #lockscreen p{color:#ccc;font-size:14px}
-  </style>
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+h1,h2{
+text-transform:uppercase;
+letter-spacing:2px;
+}
+
+h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.section-sub{
+opacity:.7;
+margin-bottom:30px;
+}
+
+/* INTRO */
+
+.intro{
+background:radial-gradient(circle at top,#1a1a1a,#0b0b0b);
+text-align:center;
+}
+
+.logo{
+width:190px;
+margin-bottom:25px;
+filter:drop-shadow(0 10px 25px rgba(0,0,0,.6));
+}
+
+.intro p{
+max-width:650px;
+margin:auto;
+font-size:18px;
+opacity:.85;
+}
+
+/* SHORT FORM */
+
+.short{
+background:#ffffff;
+color:#111;
+}
+
+.grid-3{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:35px;
+}
+
+/* LONG FORM */
+
+.long{
+background:#121212;
+}
+
+.grid-2{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+gap:40px;
+}
+
+/* VIDEO CARDS */
+
+.video-card{
+position:relative;
+border-radius:14px;
+overflow:hidden;
+transition:.35s ease;
+box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.video-card:hover{
+transform:translateY(-6px) scale(1.01);
+box-shadow:0 25px 60px rgba(0,0,0,.5);
+}
+
+.video-card video{
+width:100%;
+display:block;
+aspect-ratio:9/16;
+object-fit:cover;
+}
+
+.video-card iframe{
+width:100%;
+aspect-ratio:16/9;
+border:none;
+}
+
+.video-overlay{
+position:absolute;
+top:12px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+align-items:center;
+gap:8px;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(4px);
+padding:6px 12px;
+border-radius:30px;
+font-size:12px;
+font-weight:600;
+color: white;
+}
+
+.video-overlay img{
+width:18px;
+height:18px;
+border-radius:50%;
+}
+
+/* CONTACT */
+
+.contact{
+background:#ececec;
+color:#111;
+text-align:center;
+}
+
+.contact-links{
+margin-top:25px;
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.contact a{
+text-decoration:none;
+font-weight:600;
+padding:10px 18px;
+border-radius:8px;
+background:#111;
+color:white;
+transition:.25s;
+}
+
+.contact a:hover{
+transform:translateY(-2px);
+background:#000;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:25px;
+background:#050505;
+font-size:13px;
+opacity:.6;
+}
+
+/* SMALL SCREENS */
+
+@media (max-width:600px){
+
+section{
+padding:70px 8%;
+}
+
+h1{font-size:32px}
+
+.grid-2{
+grid-template-columns:1fr;
+}
+
+}
+
+/* HIDDEN VIDEOS */
+
+.hidden-videos{
+display:none;
+margin-top:35px;
+}
+
+.see-more-btn{
+display:block;
+margin: 60px auto;
+padding:12px 26px;
+border:none;
+background:#111;
+color:white;
+font-weight:600;
+border-radius:8px;
+cursor:pointer;
+transition:.25s;
+}
+
+.see-more-btn:hover{
+transform:translateY(-2px);
+background:#000;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="wrap" id="content">
-    <header>
-      <div class="brand">Justas Žiurinskas</div>
-      <nav>
-        <a href="https://www.twitch.tv/justas_ziur">justas_ziur</a>
-      </nav>
-    </header>
 
-    <div class="intro">
-      <h1>Portfolio</h1>
-      <p>Šiuo metu portfolio yra išjungtas.</p>
-    </div>
+<section class="intro">
+<div class="container">
 
-    <section>
-      <h1>Pavyzdžiai:</h1>
-      <div class="media"><video controls preload="metadata"><source src="videos/vertical1.mp4" type="video/mp4"></video></div>
-    </section>
+<img src="logo.png" class="logo" alt="logo">
 
-    <footer>
-      <div>Kontaktai</div>
-      <div class="contact-row">
-        <div class="contact-card"><strong>Email:</strong> justas.ziur@gmail.com</div>
-        <div class="contact-card"><strong>Discord:</strong> justas.ziur</div>
-        <div class="contact-card"><strong>Instagram:</strong> @justas_ziur</div>
-      </div>
-    </footer>
-	<div style="font-size:13px;color:#aaa;margin-top:8px">© Justas Žiurinskas, est. 2020</div>
-  </div>
+<h1>Justas Žiurinskas</h1>
 
-  <script>
-    const form=document.getElementById('pwform');
-    const input=document.getElementById('pwinput');
-    const msg=document.getElementById('pwmsg');
-    const lock=document.getElementById('lockscreen');
-    const content=document.getElementById('content');
+<p>
+Professional video editor specializing in high‑engagement social media content,
+short‑form storytelling, and cinematic long‑form edits.
+</p>
 
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      if(input.value==="elteju"){
-        lock.style.display="none";
-        content.style.display="block";
-      }else{
-        msg.textContent="Slaptažodis neteisingas.";
-        input.value="";
-      }
-    });
-  </script>
+</div>
+</section>
+
+
+<section class="short">
+<div class="container">
+
+<h2>Short Form Edits</h2>
+<p class="section-sub">TikTok • Reels • Shorts</p>
+
+<div class="grid-3">
+
+<div class="video-card">
+<div class="video-overlay">
+<img src="./videos/logos/redbull.png"> Red Bull
+</div>
+<video controls src="./videos/redbull_atspek_skina.mp4"></video>
+</div>
+
+<div class="video-card">
+<div class="video-overlay">
+<img src="./videos/logos/lturep.jpg"> LTU Republic
+</div>
+<video controls src="./videos/lturep_geo_reklama.mp4"></video>
+</div>
+
+<div class="video-card">
+<div class="video-overlay">
+<img src="./videos/logos/cr.jpg"> Creators Republic
+</div>
+<video controls src="./videos/lrtu_fan_edit.mp4"></video>
+</div>
+
+</div>
+
+</div>
+
+
+
+</section>
+
+
+<section class="long">
+<div class="container">
+
+<h2>Long Form Edits</h2>
+<p class="section-sub">YouTube & documentary edits</p>
+
+<div class="grid-2">
+
+<div class="video-card">
+<iframe src="https://www.youtube.com/embed/1SbsaamaDXM" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+</div>
+
+<div class="video-card">
+<iframe src="https://www.youtube.com/embed/ZN4mIeZhgZ0" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<section class="contact">
+<div class="container">
+
+<h2>Let's Work Together</h2>
+<p>Available for freelance editing and creator collaborations.</p>
+
+<div class="contact-links">
+<a href="https://www.instagram.com/justas.ziurinskas/"><i class="fa-brands fa-instagram"></i> justas.ziurinskas</a>
+<a href="mailto:justas.ziur@gmail.com"><i class="fa-solid fa-envelope"></i> justas.ziur@gmail.com</a>
+</div>
+
+</div>
+</section>
+
+
+<footer>
+Generating milions of views since 2020<br>
+© 2026 Justas Žiurinskas
+</footer>
+
 </body>
 </html>
