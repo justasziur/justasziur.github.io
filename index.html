@@ -1,331 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portfolio | Justas Žiurinskas</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="icon" href="icon.png" type="image/x-icon">
-<meta property="og:image" content="https://justasziur.github.io/web-img.png">
-
+<meta name="description" content="Justas's editing portfolio.">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0a0a;
+    --card:#141414;
+    --text:#f5f5f5;
+    --muted:#8c8c8c;
+    --accent:#ffffff;
+    --accent-text:#0a0a0a;
+    --line:#2e2e2e;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;
+  }
+  .container{max-width:1200px;margin:0 auto;padding:0 24px}
+  section{padding:90px 0;border-top:1px solid #3a3a3a}
+  #short{background:#050505}
+  #long{background:#1e1e1e}
 
-body{
-font-family:'Montserrat',sans-serif;
-background:#0b0b0b;
-color:white;
-line-height:1.6;
-}
+  /* ---------- HEADER ---------- */
+  header{
+    padding:100px 0 80px;
+    text-align:center;
+    background:radial-gradient(ellipse at top,#262626 0%,var(--bg) 65%);
+  }
+  .avatar{
+    width:150px;height:150px;border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--accent);
+    background:linear-gradient(135deg,#333,#1a1a1a);
+    margin-bottom:24px;
+  }
+  header h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-1px}
+  header p{
+    max-width:560px;margin:14px auto 0;
+    color:var(--muted);font-size:1.1rem;
+  }
+  .nav{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:12px 26px;border-radius:999px;
+    background:var(--accent);color:var(--accent-text);text-decoration:none;
+    font-weight:600;border:none;cursor:pointer;font-size:1rem;
+    transition:transform .15s,opacity .15s;
+  }
+  .btn:hover{transform:translateY(-2px);opacity:.92}
+  .btn.ghost{background:transparent;border:1.5px solid #3a3a3a;color:var(--text)}
+  .btn.ghost:hover{border-color:#fff}
 
-section{
-padding:80px 10%;
-}
+  /* ---------- SECTION TITLES ---------- */
+  .section-title{text-align:center;margin-bottom:44px}
+  .section-title h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:2px}
+  .section-title p{color:var(--muted);margin-top:8px;font-size:1.05rem}
 
-.container{
-max-width:1200px;
-margin:auto;
-}
+  /* ---------- SHORT FORM ---------- */
+  .short-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .short{
+    position:relative;
+    aspect-ratio:9/16;
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:linear-gradient(160deg,#2a2a2a,#141414);
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    transition:transform .2s;
+  }
+  .short:hover{transform:translateY(-4px)}
+  .short img.thumb,
+  .short video,
+  .short iframe{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;border:0;
+  }
+  .short .play{
+    position:absolute;top:50%;left:50%;
+    width:64px;height:64px;transform:translate(-50%,-50%);
+    border-radius:50%;background:rgba(0,0,0,.55);
+    backdrop-filter:blur(4px);
+    display:grid;place-items:center;
+    transition:background .2s,transform .2s;
+  }
+  .short:hover .play{background:var(--accent);transform:translate(-50%,-50%) scale(1.08)}
+  .short:hover .play::before{border-left-color:var(--accent-text)}
+  .short .play::before{
+    content:"";margin-left:5px;
+    border-style:solid;border-width:11px 0 11px 18px;
+    border-color:transparent transparent transparent #fff;
+  }
+  .short.playing .play,
+  .short.playing .client{display:none}
 
-h1,h2{
-text-transform:uppercase;
-letter-spacing:2px;
-}
+  /* client badge (top of each short) */
+  .client{
+    position:absolute;top:12px;left:12px;right:12px;z-index:2;
+    display:flex;align-items:center;gap:10px;
+    padding:6px 14px 6px 6px;
+    background:rgba(0,0,0,.4);           /* lowered opacity */
+    backdrop-filter:blur(6px);
+    border-radius:14px;                   /* rounded corners */
+    text-decoration:none;color:#fff;
+    width:fit-content;max-width:100%;
+  }
+  .client img{
+    width:32px;height:32px;border-radius:50%;object-fit:cover;
+    background:#555;flex-shrink:0;
+  }
+  .client span{font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-h1{
-font-size:42px;
-margin-bottom:10px;
-}
+  /* show more */
+  .short.extra{display:none}
+  .short-grid.expanded .short.extra{display:block}
+  .more-wrap{text-align:center;margin-top:40px}
 
-h2{
-font-size:28px;
-margin-bottom:10px;
-}
+  /* ---------- LONG FORM ---------- */
+  .long-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .long{
+    background:#0d0d0d;
+    border:1px solid #333;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  .long .ratio{position:relative;aspect-ratio:16/9;background:#000}
+  .long iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .long h3{padding:14px 18px;font-size:1rem;font-weight:600}
 
-.section-sub{
-opacity:.7;
-margin-bottom:30px;
-}
+  /* ---------- CONTACT ---------- */
+  #contact{text-align:center;background:#f2f2f2;color:#0a0a0a;border-top:none}
+  #contact .section-title p{color:#555}
+  #contact .btn{background:#0a0a0a;color:#fff}
+  #contact .btn.ghost{background:transparent;color:#0a0a0a;border-color:#0a0a0a}
+  #contact .btn.ghost:hover{background:#0a0a0a;color:#fff}
+  .contact-links{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px;
+  }
+  footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.9rem;background:#000}
 
-/* INTRO */
-
-.intro{
-background:radial-gradient(circle at top,#1a1a1a,#0b0b0b);
-text-align:center;
-}
-
-.logo{
-width:190px;
-margin-bottom:25px;
-filter:drop-shadow(0 10px 25px rgba(0,0,0,.6));
-}
-
-.intro p{
-max-width:650px;
-margin:auto;
-font-size:18px;
-opacity:.85;
-}
-
-/* SHORT FORM */
-
-.short{
-background:#ffffff;
-color:#111;
-}
-
-.grid-3{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:35px;
-}
-
-/* LONG FORM */
-
-.long{
-background:#121212;
-}
-
-.grid-2{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
-gap:40px;
-}
-
-/* VIDEO CARDS */
-
-.video-card{
-position:relative;
-border-radius:14px;
-overflow:hidden;
-transition:.35s ease;
-box-shadow:0 15px 40px rgba(0,0,0,.35);
-}
-
-.video-card:hover{
-transform:translateY(-6px) scale(1.01);
-box-shadow:0 25px 60px rgba(0,0,0,.5);
-}
-
-.video-card video{
-width:100%;
-display:block;
-aspect-ratio:9/16;
-object-fit:cover;
-}
-
-.video-card iframe{
-width:100%;
-aspect-ratio:16/9;
-border:none;
-}
-
-.video-overlay{
-position:absolute;
-top:12px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-align-items:center;
-gap:8px;
-background:rgba(0,0,0,.65);
-backdrop-filter:blur(4px);
-padding:6px 12px;
-border-radius:30px;
-font-size:12px;
-font-weight:600;
-color: white;
-}
-
-.video-overlay img{
-width:18px;
-height:18px;
-border-radius:50%;
-}
-
-/* CONTACT */
-
-.contact{
-background:#ececec;
-color:#111;
-text-align:center;
-}
-
-.contact-links{
-margin-top:25px;
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:20px;
-}
-
-.contact a{
-text-decoration:none;
-font-weight:600;
-padding:10px 18px;
-border-radius:8px;
-background:#111;
-color:white;
-transition:.25s;
-}
-
-.contact a:hover{
-transform:translateY(-2px);
-background:#000;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:25px;
-background:#050505;
-font-size:13px;
-opacity:.6;
-}
-
-/* SMALL SCREENS */
-
-@media (max-width:600px){
-
-section{
-padding:70px 8%;
-}
-
-h1{font-size:32px}
-
-.grid-2{
-grid-template-columns:1fr;
-}
-
-}
-
-/* HIDDEN VIDEOS */
-
-.hidden-videos{
-display:none;
-margin-top:35px;
-}
-
-.see-more-btn{
-display:block;
-margin: 60px auto;
-padding:12px 26px;
-border:none;
-background:#111;
-color:white;
-font-weight:600;
-border-radius:8px;
-cursor:pointer;
-transition:.25s;
-}
-
-.see-more-btn:hover{
-transform:translateY(-2px);
-background:#000;
-}
-
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .long-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:640px){
+    section{padding:56px 0}
+    .short-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+    .long-grid{grid-template-columns:1fr}
+    .client span{font-size:.75rem}
+    .client img{width:26px;height:26px}
+  }
 </style>
 </head>
-
 <body>
 
-<section class="intro">
-<div class="container">
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="container">
+    <h1>JUSTAS ŽIURINSKAS</h1>
+    <p>Professional video editor specializing in high‑engagement social media content.</p>
+    <div class="nav">
+      <a class="btn" href="#short">Short form</a>
+      <a class="btn ghost" href="#long">Long form</a>
+      <a class="btn ghost" href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
 
-<img src="logo.png" class="logo" alt="logo">
+<!-- ================= SHORT FORM ================= -->
+<section id="short">
+  <div class="container">
+    <div class="section-title">
+      <h2>SHORT FORM EDITS</h2>
+      <p>TikTok • Reels • Shorts</p>
+    </div>
 
-<h1>Justas Žiurinskas</h1>
+    <div class="short-grid" id="shortGrid">
 
-<p>
-Professional video editor specializing in high‑engagement social media content,
-short‑form storytelling, and cinematic long‑form edits.
-</p>
+      <!-- Video 1 -->
+      <div class="short" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/redbull_atspek_skina.mp4">
+        <a class="client" href="https://instagram.com/redbullltu" target="_blank" rel="noopener">
+          <img src="./videos/logos/redbull.png" alt="" onerror="this.style.visibility='hidden'">
+          <span>Red Bull</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/rb_atspek_skin.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
 
-</div>
+      <!-- Video 2 -->
+      <div class="short" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/lturep_geo_reklama.mp4" poster="./videos/thumbnails/lturep_geo.png">
+        <a class="client" href="https://instagram.com/lturepublic" target="_blank" rel="noopener">
+          <img src="./videos/logos/lturep.jpg" alt="" onerror="this.style.visibility='hidden'">
+          <span>LTU Republic</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/lturep_geo.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="short" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/lrtu_fan_edit.mp4">
+        <a class="client" href="https://instagram.com/lrtu_insta" target="_blank" rel="noopener">
+          <img src="./videos/logos/lrtu.jpg" alt="" onerror="this.style.visibility='hidden'">
+          <span>LRTU</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/lrtu_fan.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
+
+      <!-- ===== Hidden until "Show more" ===== -->
+
+      <!-- Video 4 -->
+      <div class="short extra" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/redbull_didziausia_zala.mp4">
+        <a class="client" href="https://instagram.com/redbullltu" target="_blank" rel="noopener">
+          <img src="./videos/logos/redbull.png" alt="" onerror="this.style.visibility='hidden'">
+          <span>Red Bull</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/redbull_didziausia_zala.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
+
+      <!-- Video 5 (YouTube Short example) -->
+      <div class="short extra" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/cr_simio-reveal.mp4">
+        <a class="client" href="https://instagram.com/creators.republic" target="_blank" rel="noopener">
+          <img src="./videos/logos/cr.jpg" alt="" onerror="this.style.visibility='hidden'">
+          <span>Creators Republic</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/cr_simio-reveal.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
+
+      <!-- Video 6 -->
+      <div class="short extra" data-video="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/darius_gloves.mp4">
+        <a class="client" href="https://instagram.com/darius.kniuksta" target="_blank" rel="noopener">
+          <img src="./videos/logos/dariuscxz.jpg" alt="" onerror="this.style.visibility='hidden'">
+          <span>Darius Žaidžia</span>
+        </a>
+        <img class="thumb" src="./videos/thumbnails/darius_gloves.png" alt="" onerror="this.remove()">
+        <div class="play"></div>
+      </div>
+
+    </div>
+
+    <div class="more-wrap">
+      <button class="btn ghost" id="moreBtn" type="button">Show more</button>
+    </div>
+  </div>
 </section>
 
+<!-- ================= LONG FORM ================= -->
+<section id="long">
+  <div class="container">
+    <div class="section-title">
+      <h2>LONG FORM EDITS</h2>
+      <p>YouTube &amp; documentary edits</p>
+    </div>
 
-<section class="short">
-<div class="container">
+    <div class="long-grid">
 
-<h2>Short Form Edits</h2>
-<p class="section-sub">TikTok • Reels • Shorts</p>
+      <!--
+        ===== HOW TO ADD A LONG VIDEO =====
+        Copy one <div class="long"> ... </div> block, paste it below,
+        and replace VIDEO_ID with the YouTube video ID
+        (the part after v= in the link). Every 3 videos make a new row automatically.
+      -->
 
-<div class="grid-3">
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/dJtziPjPLJ0" title="KREPŠINIO KEDŲ ISTORIJA | STORY TIME" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>KREPŠINIO KEDŲ ISTORIJA | STORY TIME</h3>
+      </div>
 
-<div class="video-card">
-<div class="video-overlay">
-<img src="./videos/logos/redbull.png"> Red Bull
-</div>
-<video controls src="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/redbull_atspek_skina.mp4" poster="./videos/thumbnails/rb_atspek_skin.png"></video>
-</div>
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/1SbsaamaDXM" title="CS2 Showdown atidarymas" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>CS2 Showdown atidarymas</h3>
+      </div>
 
-<div class="video-card">
-<div class="video-overlay">
-<img src="./videos/logos/lturep.jpg"> LTU Republic
-</div>
-<video controls src="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/lturep_geo_reklama.mp4" poster="./videos/thumbnails/lturep_geo.png"></video>
-</div>
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/ZN4mIeZhgZ0" title="SEK MANE: CS2 CREATORS SHOWDOWN IŠ VIDAUS | GAME ON 2025" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>SEK MANE: CS2 CREATORS SHOWDOWN IŠ VIDAUS | GAME ON 2025</h3>
+      </div>
 
-<div class="video-card">
-<div class="video-overlay">
-<img src="./videos/logos/cr.jpg"> Creators Republic
-</div>
-<video controls src="https://github.com/justasziur/justasziur.github.io/raw/refs/heads/main/videos/lrtu_fan_edit.mp4" poster="./videos/thumbnails/lrtu_fan.png"></video>
-</div>
+      <!-- Row 2
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video 4" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>Hmm...</h3>
+      </div>
 
-</div>
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video 5" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>Seems like nothing is here</h3>
+      </div>
 
-</div>
-
-
-
+      <div class="long">
+        <div class="ratio">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Video 6" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+        <h3>Enjoy some other videos;)</h3>
+      </div>
+ -->
+    </div>
+  </div>
 </section>
 
-
-<section class="long">
-<div class="container">
-
-<h2>Long Form Edits</h2>
-<p class="section-sub">YouTube & documentary edits</p>
-
-<div class="grid-2">
-
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/1SbsaamaDXM" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
-</div>
-
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/ZN4mIeZhgZ0" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
-</div>
-
-</div>
-
-</div>
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="container">
+    <div class="section-title">
+      <h2>LET'S WORK TOGETHER</h2>
+      <p>Available for freelance editing and creator collaborations.</p>
+    </div>
+    <div class="contact-links">
+      <a class="btn" href="mailto:justas.ziur@gmail.com">justas.ziur@gmail.com</a>
+      <a class="btn ghost" href="https://www.instagram.com/justas.ziurinskas/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
 </section>
 
+<footer>© <span id="year"></span> Justas Žiurinskas. All rights reserved.</footer>
 
-<section class="contact">
-<div class="container">
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-<h2>Let's Work Together</h2>
-<p>Available for freelance editing and creator collaborations.</p>
+  // Show more / show less
+  const grid = document.getElementById('shortGrid');
+  const moreBtn = document.getElementById('moreBtn');
+  if (!grid.querySelector('.short.extra')) moreBtn.style.display = 'none';
+  moreBtn.addEventListener('click', () => {
+    const open = grid.classList.toggle('expanded');
+    moreBtn.textContent = open ? 'Show less' : 'Show more';
+  });
 
-<div class="contact-links">
-<a href="https://www.instagram.com/justas.ziurinskas/"><i class="fa-brands fa-instagram"></i> justas.ziurinskas</a>
-<a href="mailto:justas.ziur@gmail.com"><i class="fa-solid fa-envelope"></i> justas.ziur@gmail.com</a>
-</div>
+  // Click a short to play it in place (mp4 file or YouTube embed)
+  document.querySelectorAll('.short').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('.client')) return;   // let the client link work
+      if (card.classList.contains('playing')) return;
 
-</div>
-</section>
+      // stop any other playing short
+      document.querySelectorAll('.short.playing').forEach(other => {
+        const media = other.querySelector('video, iframe');
+        if (media) media.remove();
+        other.classList.remove('playing');
+      });
 
+      let el;
+      if (card.dataset.embed) {
+        el = document.createElement('iframe');
+        const sep = card.dataset.embed.includes('?') ? '&' : '?';
+        el.src = card.dataset.embed + sep + 'autoplay=1&rel=0';
+        el.allow = 'autoplay; encrypted-media; picture-in-picture';
+        el.allowFullscreen = true;
+      } else if (card.dataset.video) {
+        el = document.createElement('video');
+        el.src = card.dataset.video;
+        el.controls = true;
+        el.autoplay = true;
+        el.playsInline = true;
+      } else return;
 
-<footer>
-Generating milions of views since 2020<br>
-© 2026 Justas Žiurinskas
-</footer>
-
+      card.appendChild(el);
+      card.classList.add('playing');
+    });
+  });
+</script>
 </body>
 </html>
